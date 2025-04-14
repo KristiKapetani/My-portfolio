@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Quiz</h1>
+<div id="question"></div>
+<div id="answers"></div>
+<button onclick="nextQuestion()">Next</button>
+<p id="score"></p>
+
+<script>
+let quiz = [
+  { q: "What is 2 + 2?", options: ["3", "4", "5"], answer: 1 },
+  { q: "What is the capital of France?", options: ["Berlin", "London", "Paris"], answer: 2 }
+];
+let current = 0, score = 0;
+
+function loadQuestion() {
+  document.getElementById("question").innerText = quiz[current].q;
+  document.getElementById("answers").innerHTML = "";
+  quiz[current].options.forEach((opt, i) => {
+    let btn = document.createElement("button");
+    btn.innerText = opt;
+    btn.onclick = () => {
+      if (i === quiz[current].answer) score++;
+      nextQuestion();
+    };
+    document.getElementById("answers").appendChild(btn);
+  });
+}
+
+function nextQuestion() {
+  current++;
+  if (current < quiz.length) loadQuestion();
+  else document.getElementById("score").innerText = "Score: " + score + "/" + quiz.length;
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
